@@ -1,6 +1,9 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
+import jobSearchWeb from '../assets/jobSearchWeb.png';
+import suppChainMan from '../assets/suppChainMan.jpg';
+import resumeLogo from '../assets/logo.jpg';
 
 const ProjectsSection = styled.section`
   min-height: 100vh;
@@ -92,28 +95,28 @@ const Link = styled.a`
 
 const projects = [
   {
-    title: "Project 1",
-    description: "A brief description of your first project. Explain what it does and what technologies you used.",
-    image: "/project1.jpg",
-    tech: ["React", "Node.js", "MongoDB"],
-    github: "https://github.com/yourusername/project1",
-    live: "https://project1.com"
+    title: "Supply Chain Management using Blockchain",
+    description: "A Supply Chain Management System designed using React.js and Blockchain technology. The system was tested on local blockchain simulation using Ganache",
+    image: suppChainMan,
+    tech: ["React.js", "Web3.js", "Ethers.js", "Solidity", "Ganache"],
+    github: "https://github.com/Git0103/Supply_Chain_Blockchain_Proj",
+    live: "https://github.com/Git0103/Supply_Chain_Blockchain_Proj"
   },
   {
-    title: "Project 2",
-    description: "Description of your second project. Highlight the key features and your role in development.",
-    image: "/project2.jpg",
-    tech: ["React", "Firebase", "Tailwind CSS"],
-    github: "https://github.com/yourusername/project2",
-    live: "https://project2.com"
+    title: "Job Search Website",
+    description: "A simple job search website that allows users to search for jobs and apply to them. Made using React-Vite, and Firebase.",
+    image: jobSearchWeb,
+    tech: ["React", "Firebase"],
+    github: "https://github.com/Git0103/job-search-website",
+    live: "https://job-search-website-phi.vercel.app/"
   },
   {
-    title: "Project 3",
-    description: "Details about your third project. Mention any challenges you overcame and what you learned.",
-    image: "/project3.jpg",
-    tech: ["React", "Express", "PostgreSQL"],
-    github: "https://github.com/yourusername/project3",
-    live: "https://project3.com"
+    title: "Resume Analyzer",
+    description: "An Natural Language Processing project made using Python and NLP technologies.",
+    image: resumeLogo,
+    tech: ["Python", "NLP"],
+    github: "https://github.com/Git0103/resume_analyzer",
+    live: "https://github.com/Git0103/resume_analyzer"
   }
 ];
 
