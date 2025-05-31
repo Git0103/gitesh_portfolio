@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 import jobSearchWeb from '../assets/jobSearchWeb.png';
-import suppChainMan from '../assets/suppChainMan.jpg';
+import suppChainMan from '../assets/SuppChainMan.jpg';
 import resumeLogo from '../assets/logo.jpg';
 
 const ProjectsSection = styled.section`
