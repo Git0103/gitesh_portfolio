@@ -91,7 +91,7 @@ const activities = [
     description: "Published a research paper on 'Improving Availability in Supply Chain Management using Blockchain Technology' in the Journal of Emerging Technologies and Innovative Research (JETIR).",
     icon: <FaFileAlt />,
     date: "2024",
-    link: "https://www.jetir.org/view?paper=JETIR2401A01",
+    link: "https://www.jetir.org/view?paper=JETIR2502751",
     linkText: "View Paper"
   }
 ];
