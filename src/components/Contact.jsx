@@ -2,6 +2,8 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
 import { SiX } from 'react-icons/si';
+import { useState, useRef } from 'react';
+import emailjs from '@emailjs/browser';
 
 const ContactSection = styled.section`
   min-height: 100vh;
@@ -120,10 +122,65 @@ const SubmitButton = styled(motion.button)`
   }
 `;
 
+const StatusMessage = styled(motion.div)`
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  text-align: center;
+  font-weight: 500;
+`;
+
+const SuccessMessage = styled(StatusMessage)`
+  background-color: #00b894;
+  color: white;
+`;
+
+const ErrorMessage = styled(StatusMessage)`
+  background-color: #d63031;
+  color: white;
+`;
+
 const Contact = () => {
-  const handleSubmit = (e) => {
+  const formRef = useRef();
+  const [status, setStatus] = useState({ type: '', message: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add your form submission logic here
+    setIsSubmitting(true);
+    setStatus({ type: '', message: '' });
+
+    try {
+      //contact form EmailJS logic
+      emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
+
+      // Send the email
+      const result = await emailjs.sendForm(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        formRef.current
+      );
+
+      console.log('EmailJS Response:', result);
+
+      if (result.text === 'OK') {
+        setStatus({
+          type: 'success',
+          message: 'Message sent successfully! I will get back to you soon.'
+        });
+        formRef.current.reset();
+      } else {
+        throw new Error(`Failed to send message: ${result.text}`);
+      }
+    } catch (error) {
+      console.error('Error sending email:', error);
+      setStatus({
+        type: 'error',
+        message: `Failed to send message: ${error.message || 'Please try again later.'}`
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -150,26 +207,44 @@ const Contact = () => {
               </SocialLink>
             </SocialLinks>
           </ContactInfo>
-          <ContactForm onSubmit={handleSubmit}>
+          <ContactForm ref={formRef} onSubmit={handleSubmit}>
             <FormGroup>
               <Label htmlFor="name">Name</Label>
-              <Input type="text" id="name" required />
+              <Input type="text" id="name" name="user_name" required />
             </FormGroup>
             <FormGroup>
               <Label htmlFor="email">Email</Label>
-              <Input type="email" id="email" required />
+              <Input type="email" id="email" name="user_email" required />
             </FormGroup>
             <FormGroup>
               <Label htmlFor="message">Message</Label>
-              <TextArea id="message" required />
+              <TextArea id="message" name="message" required />
             </FormGroup>
             <SubmitButton
               type="submit"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              disabled={isSubmitting}
             >
-              Send Message
+              {isSubmitting ? 'Sending...' : 'Send Message'}
             </SubmitButton>
+            {status.type && (
+              status.type === 'success' ? (
+                <SuccessMessage
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                >
+                  {status.message}
+                </SuccessMessage>
+              ) : (
+                <ErrorMessage
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                >
+                  {status.message}
+                </ErrorMessage>
+              )
+            )}
           </ContactForm>
         </ContactGrid>
       </Container>
